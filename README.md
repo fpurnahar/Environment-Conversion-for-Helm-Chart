@@ -53,15 +53,17 @@ DB_PORT=5432
 ---
 
 ## 📁 Struktur Direktori
+
+```
 helm-chart/
 ├── bases.yaml
 ├── backend/
-│ └── microservice-sample/
-│ └── environment/
-│ └── development/
-│ ├── values.yaml
-│ └── env.yaml
-
+│   └── microservice-sample/
+│       └── environment/
+│           └── development/
+│               ├── values.yaml
+│               └── env.yaml
+```
 ---
 
 ## 🚀 Cara Menjalankan Konversi
