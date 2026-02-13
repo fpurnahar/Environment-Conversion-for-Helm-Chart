@@ -1,0 +1,63 @@
+title: sample
+name: microservice-sample
+host_url: microservice-sample-development.com
+host_status: sample
+environment: development
+namespace: sample-development
+language: php
+
+image:
+  name: microservice-image-sample
+  pullPolicy: IfNotPresent
+  tag: image_tag
+
+image_fluentd:
+  name: fluentd
+  pullPolicy: IfNotPresent
+  tag: 1.0.0
+
+service:
+  type: NodePort
+  port: 8080
+  targetPort: 8080
+  weight: 100
+
+hpa:
+  enabled: true
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+  minReplicas: 1
+  maxReplicas: 2
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 300m
+    memory: 512Mi
+
+NFS:
+  enabled: true
+  lists:
+    - name: nfs-sample
+      pvc: pvc-nfs-sample
+      path: /data/NFS_SAMPLE
+
+jobs:
+  enabled: sample
+  lists:   
+    - name: sample
+      command:
+        - "/bin/sh"
+        - "-c"
+        - "php artisan queue:listen --queue={sample} --sleep=5 --timeout=3600"
+      minReplicas: 1
+      maxReplicas: 2
+
+schedule:
+  enabled: false
+  lists:
+    - name: sample
+      schedule: "0 18 * * *" # 01:00 WIB
+      command: ["/bin/sh", "-c", "php artisan job:sample"]
