@@ -44,12 +44,13 @@ Pastikan Anda memiliki:
 - File `.env` dengan format yang benar
 
 ### Contoh format `.env`:
+```
 APP_NAME=sample-service
 APP_ENV=development
 APP_DEBUG=true
 DB_HOST=localhost
 DB_PORT=5432
-
+```
 ---
 
 ## 📁 Struktur Direktori
